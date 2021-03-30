@@ -6,6 +6,7 @@ import { DogImages } from './DogImages';
 function DogForm () {
 
 const [formState, setFormState] = useState({
+  id: 0,
   imgUrl: ''
 });
 const [dogImageArray, setDogImageArray] = useState([]);
@@ -20,9 +21,8 @@ const handleChange = (e) => {
     setFormState(newState);
 };
 
-  const onDogImageClick = (dogElUrl) => {
-    console.log(dogElUrl)
-    const dogElVal = dogImageArray.findIndex((el) => el.imgUrl === dogElUrl);
+  const onDogImageClick = (dogElId) => {
+    const dogElVal = dogImageArray.findIndex((el) => el.id === dogElId);
     const dogEl = dogImageArray[dogElVal];
     setFormState(dogEl);
   };
@@ -34,7 +34,7 @@ const handleChange = (e) => {
     };
     const newDogImageArray = [...dogImageArray];
 
-    fetch("http://localhost:9000/api/dog", {
+    fetch("http://localhost:9000/api/dogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,17 +65,16 @@ const handleChange = (e) => {
   const handleFormDelete = (e) => {
     e.preventDefault();
 
-    const dogImageDelete = {
-      imgUrl: formState.imgUrl
-    };
-    const newDogImageArray = dogImageArray.filter((el) => el.imgUrl !== dogImageDelete.imgUrl);
+    // const dogImageDelete = {
+    //   imgUrl: formState.imgUrl
+    // };
+    const newDogImageArray = dogImageArray.filter((el) => el.id !== formState.id);
 
-    fetch(`http://localhost:9000/api/dog/`, {
+    fetch(`http://localhost:9000/api/dogs/${formState.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-      },
-      body : JSON.stringify(dogImageDelete)
+      }
     })
     .then((response) => {
       console.log(response.status);
@@ -97,7 +96,7 @@ const handleChange = (e) => {
 };
 
 useEffect(() => {
-  fetch("http://localhost:9000/api/dog", {
+  fetch("http://localhost:9000/api/dogs", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -109,7 +108,7 @@ useEffect(() => {
     })
     .then((dogImageData) => {
       console.log("GET dog data", dogImageData);
-      setDogImageArray(dogImageData.data);
+      setDogImageArray(dogImageData);
     });
 }, []);
 

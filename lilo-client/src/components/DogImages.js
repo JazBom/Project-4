@@ -6,11 +6,12 @@ const DogImages = (props) => {
     .map((el) => {
       return (
         <li
-          key={el.imgUrl}
+          key={el.id}
           className='dog-pic'
-          onClick={() => props.clickEvent(el.imgUrl)}
+          onClick={() => props.clickEvent(el.id)}
         >
            <img src={el.imgUrl} />
+           
         </li>
       );
     });

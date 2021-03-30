@@ -140,7 +140,6 @@ const MenuForm = (props) => {
         response.json()
         .then((body) => {
           console.log(body);
-         
           setErrorMessage("Could not delete - is the ID correct?");
         });
       }
