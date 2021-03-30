@@ -1,5 +1,5 @@
 class Api::AuthController < ApplicationController
-  before_action :user_valid, except: [:login]
+  # before_action :user_valid, except: [:login]
   def login
     user = User.find_by(name: params[:name])
     puts 'User'

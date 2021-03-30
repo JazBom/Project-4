@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 const Form = (props) => {
 
     const [formState, setFormState] = useState({
-        _id: '',
+        id: 0,
         item: '',
         price: '',
         category: '',
@@ -25,17 +25,17 @@ const Form = (props) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        props.submit(formState._id, formState.item, formState.price, formState.category);
+        props.submit(formState.id, formState.item, formState.price, formState.category);
         };
 
     const handleFormEdit = (e) => {
         e.preventDefault();
-        props.editsubmit(formState._id, formState.item, formState.price, formState.category);
+        props.editsubmit(formState.id, formState.item, formState.price, formState.category);
         };
 
     const handleFormDelete = (e) => {
         e.preventDefault();
-        props.deletesubmit(formState._id, formState.item, formState.price, formState.category);
+        props.deletesubmit(formState.id, formState.item, formState.price, formState.category);
         };
 
     return(
@@ -50,9 +50,6 @@ const Form = (props) => {
                 </div>
                 
                 <div className="inputs">
-                <label>Id: 
-                        <input name="_id" className="form-field" value={formState._id} onChange={handleChange}></input>
-                    </label>
                     <label>Item: 
                         <input name="item" className="form-field" value={formState.item} onChange={handleChange}></input>
                     </label>

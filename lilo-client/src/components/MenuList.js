@@ -6,9 +6,9 @@ const MenuList = (props) => {
     .map((el) => {
       return (
         <li
-          key={el._id}
+          key={el.id}
           className={el.category}
-          onClick={() => props.clickEvent(el._id)}
+          onClick={() => props.clickEvent(el.id)}
         >
           {el.item} - {el.price}
         </li>
@@ -19,9 +19,9 @@ const MenuList = (props) => {
     .map((el) => {
       return (
         <li
-          key={el._id}
+          key={el.id}
           className={el.category}
-          onClick={() => props.clickEvent(el._id)}
+          onClick={() => props.clickEvent(el.id)}
         >
           {el.item} - {el.price}
         </li>
@@ -32,9 +32,9 @@ const MenuList = (props) => {
     .map((el) => {
       return (
         <li
-          key={el._id}
+          key={el.id}
           className={el.category}
-          onClick={() => props.clickEvent(el._id)}
+          onClick={() => props.clickEvent(el.id)}
         >
           {el.item} - {el.price}
         </li>
@@ -45,9 +45,9 @@ const MenuList = (props) => {
     .map((el) => {
       return (
         <li
-          key={el._id}
+          key={el.id}
           className={el.category}
-          onClick={() => props.clickEvent(el._id)}
+          onClick={() => props.clickEvent(el.id)}
         >
           {el.item} - {el.price}
         </li>
@@ -58,9 +58,9 @@ const MenuList = (props) => {
     .map((el) => {
       return (
         <li
-          key={el._id}
+          key={el.id}
           className={el.category}
-          onClick={() => props.clickEvent(el._id)}
+          onClick={() => props.clickEvent(el.id)}
         >
           {el.item} - {el.price}
         </li>

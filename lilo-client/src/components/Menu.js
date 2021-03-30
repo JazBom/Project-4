@@ -6,7 +6,7 @@ export function Menu () {
   const[menuArray, setMenuArray] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:9000/api/menu', {
+    fetch('http://localhost:9000/api/menuitems', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -17,7 +17,7 @@ export function Menu () {
         return response.json();
     }).then((menuData) => {
         console.log("GET menu data", menuData);
-        setMenuArray(menuData.data);
+        setMenuArray(menuData);
     });
   });
 

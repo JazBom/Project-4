@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :user_valid, except: [:create]
+  # before_action :user_valid, except: [:create]
 
   def index
     render json: User.all
