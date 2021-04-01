@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
-export const AdminLogin = () => {
+export const AdminLogin = (props) => {
+    
     const history = useHistory();
     const [form, setForm] = useState({
         name: '',
@@ -27,7 +28,7 @@ export const AdminLogin = () => {
         .then(data => {
             window.localStorage.setItem('token', data.token);
             if(data.token) {
-                history.replace('/admin-user')
+                history.replace('/admin-user');
             }
         })
     }

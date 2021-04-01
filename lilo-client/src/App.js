@@ -16,9 +16,15 @@ import { Form } from './components/Form';
 import { DogForm } from './components/DogForm';
 import { DogImages } from './components/DogImages';
 import { AdminLogin } from "./users/AdminLogin";
-
+import { ProtectedRoute } from "./users/ProtectedRoute";
 
 const App = () => {
+
+const isLoggedIn = () => {
+  const token = window.localStorage.getItem('token');
+  return token ? true : false;
+}
+
   return (
     <Router>
     <div className="app">
@@ -44,24 +50,28 @@ const App = () => {
           </Route>
           
           <Route exact path="/admin-login">
-            <AdminLogin/>
+            <AdminLogin />
           </Route>
 
-          <Route exact path="/admin-user">
-            <Admin/>
-          </Route>
+          <ProtectedRoute 
+          path="/admin-user"
+          loggedIn={isLoggedIn}
+          component={Admin}/>
 
-          <Route exact path="/admin/menu-update">
-            <MenuForm/>
-          </Route>
+          <ProtectedRoute 
+          path="/admin/menu-update"
+          loggedIn={isLoggedIn}
+          component={MenuForm}/>
 
-          <Route exact path="/admin/dogs">
-            <DogForm/>
-          </Route>
+          <ProtectedRoute 
+          path="/admin/dogs"
+          loggedIn={isLoggedIn}
+          component={DogForm}/>
 
-          <Route exact path="/admin/dogs/images">
-            <DogImages/>
-          </Route>
+          <ProtectedRoute 
+          path="/admin/dogs/images"
+          loggedIn={isLoggedIn}
+          component={DogImages}/>
 
         </Switch>
         

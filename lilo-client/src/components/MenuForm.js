@@ -31,7 +31,7 @@ const MenuForm = (props) => {
   };
 
   // Add item button logic in menu form
-  const handleFormSubmit = (id, item, price, category) => {
+  const handleFormSubmit = (item, price, category) => {
     const newMenuItem = {
       item: item,
       price: price,
@@ -67,7 +67,6 @@ const MenuForm = (props) => {
       });
   };
 
-
   // Edit item button logic in menu form
   const handleFormEdit = (id, item, price, category) => {
     const menuEditItem = {
@@ -78,7 +77,6 @@ const MenuForm = (props) => {
     };
     setMenuEditItem(menuEditItem);
     const newMenuArray = [...menuArray];
-  
 
     fetch(`http://localhost:9000/api/menuitems/${menuEditItem.id}`, {
       method: "PUT",
