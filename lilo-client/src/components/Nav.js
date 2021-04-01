@@ -15,6 +15,7 @@ function Nav() {
     <li><Link to="/menu">Menu</Link></li>
     <li><a href='#Footer'>Location</a></li>
     <li><a href='#Footer'>Contact</a></li>
+    <li><Link to="/admin-user">Admin</Link></li>
     </ul>
     
     </div> 
