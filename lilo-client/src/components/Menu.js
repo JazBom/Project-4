@@ -19,7 +19,7 @@ export function Menu () {
         console.log("GET menu data", menuData);
         setMenuArray(menuData);
     });
-  });
+  }, []);
 
 return (
         <div className="menu">
