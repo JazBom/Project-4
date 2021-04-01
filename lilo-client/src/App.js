@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,16 +20,21 @@ import { ProtectedRoute } from "./users/ProtectedRoute";
 
 const App = () => {
 
-const isLoggedIn = () => {
-  const token = window.localStorage.getItem('token');
-  return token ? true : false;
-}
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  const onLogin = () => {
+    setLoggedIn(true);
+  }
+
+  const onLogout = () => {
+    setLoggedIn(false);
+  }
 
   return (
     <Router>
     <div className="app">
     <img className="image-background" src="https://web.archive.org/web/20161031200755if_/http://static.panoramio.com/photos/large/102225398.jpg" alt="beach boxes in background"/>
-    <Nav/>
+    <Nav loggedIn={isLoggedIn} logOut={onLogout}/>
           <Switch>
           
           <Route exact path="/">
@@ -50,7 +55,7 @@ const isLoggedIn = () => {
           </Route>
           
           <Route exact path="/admin-login">
-            <AdminLogin />
+            <AdminLogin logIn={onLogin}/>
           </Route>
 
           <ProtectedRoute 

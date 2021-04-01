@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import Button from 'react-bootstrap/Button';
+
 
 export const AdminLogin = (props) => {
     
@@ -28,6 +30,7 @@ export const AdminLogin = (props) => {
         .then(data => {
             window.localStorage.setItem('token', data.token);
             if(data.token) {
+                props.logIn();
                 history.replace('/admin-user');
             }
         })
@@ -35,8 +38,10 @@ export const AdminLogin = (props) => {
 
     return (
         <div className="Admin-login">
-            <h1>Login</h1>
+            
+
             <form onSubmit={submitHandler}>
+               
                 <label>
                     Username:
                     <input name="name" value={form.name} onChange={changeHandler}/>
@@ -44,8 +49,14 @@ export const AdminLogin = (props) => {
                 <label>Password:
                     <input name="password" value={form.password} onChange={changeHandler}/>
                     </label>
-                    <button type="submit">Submit</button>
+                    
+                    <Button class="btn btn-light" type="submit">Log in</Button>
+    
+                    {/* <Button className="btn btn-primary" type="button">Log out</Button> */}
+                  
                 </form>
+                
+
         </div>
     )
 }
