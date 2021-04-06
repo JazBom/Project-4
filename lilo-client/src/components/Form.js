@@ -25,7 +25,7 @@ const Form = (props) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        props.submit(formState.id, formState.item, formState.price, formState.category);
+        props.submit(formState.item, formState.price, formState.category);
         };
 
     const handleFormEdit = (e) => {
@@ -50,6 +50,7 @@ const Form = (props) => {
                 </div>
                 
                 <div className="inputs">
+                    <input name="id" type="hidden" value={formState.id}></input>
                     <label>Item: 
                         <input name="item" className="form-field" value={formState.item} onChange={handleChange}></input>
                     </label>
