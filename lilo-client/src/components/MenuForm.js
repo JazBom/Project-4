@@ -14,9 +14,10 @@ const MenuForm = (props) => {
     id: 0,
     item: "",
     price: "",
-    category: "",
+    menu_category_id: 0,
   };
 
+  const [menuCategories, setMenuCategories] = useState([]);
   const [menuArray, setMenuArray] = useState([]);
   const [menuEditItem, setMenuEditItem] = useState(emptyMenuItem);
   const [menuDeleteItem, setMenuDeleteItem] = useState(emptyMenuItem);
@@ -26,16 +27,20 @@ const MenuForm = (props) => {
   const onMenuItemClick = (menuElId) => {
     const menuElIndex = menuArray.findIndex((el) => el.id === menuElId);
     const menuEl = menuArray[menuElIndex];
+    console.log(menuEl)
     setSelectedMenuItem(menuEl);
     setErrorMessage('');
   };
 
   // Add item button logic in menu form
-  const handleFormSubmit = (item, price, category) => {
+  const handleFormSubmit = (item, price, menu_category_id) => {
+    const menuCategory = menuCategories.find(el => el.id === menu_category_id);
     const newMenuItem = {
+      id: 0,
       item: item,
       price: price,
-      category: category,
+      menu_category_id: menu_category_id,
+      menu_category: menuCategory
     };
     const newMenuArray = [...menuArray];
 
@@ -48,18 +53,17 @@ const MenuForm = (props) => {
     })
       .then((response) => {
         console.log(response.status);
-        if (response.status === 201 || response.status === 200) {
-          console.log("POST menu response", response);
-          newMenuArray.push(newMenuItem);
-          setMenuArray(newMenuArray);
-          setSelectedMenuItem(emptyMenuItem);
-        } else if (response.status === 500) {
-          response.json().then((body) => {
-            console.log(body);
-            setMenuArray(menuArray);
-            setErrorMessage("Could not save - is the ID unique?");
-          });
-        }
+        console.log("POST menu response", response);
+        return response.json();
+      })
+      .then((createdMenuItem) => {
+        console.log(newMenuArray);
+        console.log(newMenuItem);
+        console.log(createdMenuItem);
+        newMenuItem.id = createdMenuItem.id;
+        newMenuArray.push(newMenuItem);
+        setMenuArray(newMenuArray);
+        setSelectedMenuItem(emptyMenuItem);
       })
       .catch((err) => {
         console.log(err);
@@ -68,12 +72,14 @@ const MenuForm = (props) => {
   };
 
   // Edit item button logic in menu form
-  const handleFormEdit = (id, item, price, category) => {
+  const handleFormEdit = (id, item, price, menu_category_id) => {
+    const menuCategory = menuCategories.find(el => el.id === menu_category_id);
     const menuEditItem = {
       id: id,
       item: item,
       price: price,
-      category: category,
+      menu_category_id: menu_category_id,
+      menu_category: menuCategory
     };
     setMenuEditItem(menuEditItem);
     const newMenuArray = [...menuArray];
@@ -92,7 +98,8 @@ const MenuForm = (props) => {
         const menuItemIndex = newMenuArray.findIndex((el) => el.id === menuEditItem.id);
         newMenuArray[menuItemIndex].item = menuEditItem.item;
         newMenuArray[menuItemIndex].price = menuEditItem.price;
-        newMenuArray[menuItemIndex].category = menuEditItem.category;
+        newMenuArray[menuItemIndex].menu_category_id = menuEditItem.menu_category_id;
+        newMenuArray[menuItemIndex].menu_category = menuEditItem.menu_category;
         setMenuArray(newMenuArray)
         setSelectedMenuItem(emptyMenuItem);
       } else if (response.status === 500) {
@@ -110,18 +117,11 @@ const MenuForm = (props) => {
 
   };
 
-  const handleFormDelete = (id, item, price, category) => {
-    const menuDeleteItem = {
-        id: id,
-        item: item,
-        price: price,
-        category: category,
-      };
-    setMenuDeleteItem(menuDeleteItem);
-    const newMenuArray = [...menuArray];
-    newMenuArray[menuDeleteItem, menuArray] = [menuDeleteItem, ...menuArray];
+  const handleFormDelete = (id) => {
 
-    fetch(`http://localhost:9000/api/menuitems/${menuDeleteItem.id}`, {
+    const newMenuArray = [...menuArray];
+
+    fetch(`http://localhost:9000/api/menuitems/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ const MenuForm = (props) => {
     .then((response) => {
       if (response.status === 201 || response.status === 200) {
         console.log("DELETE menu response", response);
-        const menuToDeleteIndex = newMenuArray.findIndex(el => el.id === menuDeleteItem.id);
+        const menuToDeleteIndex = newMenuArray.findIndex(el => el.id === id);
         newMenuArray.splice(menuToDeleteIndex, 1);
         setMenuArray(newMenuArray);
         setSelectedMenuItem(emptyMenuItem);
@@ -145,6 +145,7 @@ const MenuForm = (props) => {
   };
 
   useEffect(() => {
+
     fetch("http://localhost:9000/api/menuitems", {
       method: "GET",
       headers: {
@@ -160,12 +161,27 @@ const MenuForm = (props) => {
         setMenuArray(menuData);
       });
 
+      fetch('http://localhost:9000/api/menu_categories', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+      })
+      .then((response) => {
+          console.log("GET menu categories response", response);
+          return response.json();
+      })
+      .then((menu_categories) => {
+          console.log("GET menu category data", menu_categories);
+          setMenuCategories(menu_categories);
+      });
   }, []);
 
   return (
     <div className="menu-form">
       <div className="div-one-list">
         <MenuList
+          categories={menuCategories}        
           menu={menuArray}
           canClick="true"
           clickEvent={onMenuItemClick}
@@ -174,6 +190,7 @@ const MenuForm = (props) => {
 
       <div className="div-two-form">
         <Form
+          categories={menuCategories}
           menuItem={selectedMenuItem}
           submit={handleFormSubmit}
           editsubmit={handleFormEdit}

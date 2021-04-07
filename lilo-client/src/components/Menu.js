@@ -3,6 +3,7 @@ import MenuList from './MenuList';
 
 export function Menu () {
 
+  const [menuCategories, setMenuCategories] = useState([]);
   const[menuArray, setMenuArray] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,20 @@ export function Menu () {
         console.log("GET menu data", menuData);
         setMenuArray(menuData);
     });
+    fetch('http://localhost:9000/api/menu_categories', {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json"
+      },
+    })
+    .then((response) => {
+        console.log("GET menu categories response", response);
+        return response.json();
+    })
+    .then((menu_categories) => {
+        console.log("GET menu category data", menu_categories);
+        setMenuCategories(menu_categories);
+    });    
   }, []);
 
 return (
@@ -27,7 +42,7 @@ return (
           <div className="text">
             <div>
             
-            <MenuList menu={menuArray} canClick="false" />
+            <MenuList categories={menuCategories} menu={menuArray} canClick="false" />
           
             </div>
           </div>

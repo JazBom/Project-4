@@ -1,76 +1,95 @@
 import React from "react";
 
 const MenuList = (props) => {
-  const specialsArray = props.menu
-    .filter((el) => el.category === "specials")
-    .map((el) => {
-      return (
-        <li
-          key={el.id}
-          className={el.category}
-          onClick={() => props.clickEvent(el.id)}
-        >
-          {el.item} - {el.price}
-        </li>
-      );
-    });
-  const coffeeArray = props.menu
-    .filter((el) => el.category === "coffee")
-    .map((el) => {
-      return (
-        <li
-          key={el.id}
-          className={el.category}
-          onClick={() => props.clickEvent(el.id)}
-        >
-          {el.item} - {el.price}
-        </li>
-      );
-    });
-  const breakfastArray = props.menu
-    .filter((el) => el.category === "breakfast")
-    .map((el) => {
-      return (
-        <li
-          key={el.id}
-          className={el.category}
-          onClick={() => props.clickEvent(el.id)}
-        >
-          {el.item} - {el.price}
-        </li>
-      );
-    });
-  const lunchArray = props.menu
-    .filter((el) => el.category === "lunch")
-    .map((el) => {
-      return (
-        <li
-          key={el.id}
-          className={el.category}
-          onClick={() => props.clickEvent(el.id)}
-        >
-          {el.item} - {el.price}
-        </li>
-      );
-    });
-  const snacksArray = props.menu
-    .filter((el) => el.category === "snacks")
-    .map((el) => {
-      return (
-        <li
-          key={el.id}
-          className={el.category}
-          onClick={() => props.clickEvent(el.id)}
-        >
-          {el.item} - {el.price}
-        </li>
-      );
-    });
+  const menuListArray = props.categories.map((catEl) => {
+    return (<div>
+              <h3 className={catEl.category}>{catEl.category}</h3>
+              <ul className={catEl.category}>
+                { props.menu.filter((menuEl) => menuEl.menu_category_id === catEl.id).map((menuEl) => {
+                    return (
+                      <li
+                        key={menuEl.id}
+                        className={menuEl.menu_category.category}
+                        onClick={() => props.clickEvent(menuEl.id)}
+                      >
+                        {menuEl.item} - {menuEl.price}
+                      </li>
+                    );
+                })}
+              </ul>
+            </div>
+    );
+  });
+
+  // const specialsArray = props.menu.map((el) => {
+  //     return (
+  //       <li
+  //         key={el.id}
+  //         className={el.menu_category.category}
+  //         onClick={() => props.clickEvent(el.id)}
+  //       >
+  //         {el.item} - {el.price}
+  //       </li>
+  //     );
+  //   });
+  // const coffeeArray = props.menu
+  //   .filter((el) => el.category === "coffee")
+  //   .map((el) => {
+  //     return (
+  //       <li
+  //         key={el.id}
+  //         className={el.category}
+  //         onClick={() => props.clickEvent(el.id)}
+  //       >
+  //         {el.item} - {el.price}
+  //       </li>
+  //     );
+  //   });
+  // const breakfastArray = props.menu
+  //   .filter((el) => el.category === "breakfast")
+  //   .map((el) => {
+  //     return (
+  //       <li
+  //         key={el.id}
+  //         className={el.category}
+  //         onClick={() => props.clickEvent(el.id)}
+  //       >
+  //         {el.item} - {el.price}
+  //       </li>
+  //     );
+  //   });
+  // const lunchArray = props.menu
+  //   .filter((el) => el.category === "lunch")
+  //   .map((el) => {
+  //     return (
+  //       <li
+  //         key={el.id}
+  //         className={el.category}
+  //         onClick={() => props.clickEvent(el.id)}
+  //       >
+  //         {el.item} - {el.price}
+  //       </li>
+  //     );
+  //   });
+  // const snacksArray = props.menu
+  //   .filter((el) => el.category === "snacks")
+  //   .map((el) => {
+  //     return (
+  //       <li
+  //         key={el.id}
+  //         className={el.category}
+  //         onClick={() => props.clickEvent(el.id)}
+  //       >
+  //         {el.item} - {el.price}
+  //       </li>
+  //     );
+  //   });
 
   return (
     <div className="menu-list">
       <h2>Menu</h2>
-      <div>
+      {menuListArray}
+      {/* <div>
         <h3 className="specials">Specials</h3>
         <ul className="specials">{specialsArray}</ul>
       </div>
@@ -93,7 +112,7 @@ const MenuList = (props) => {
           <h3 className="snacks">Snacks</h3>
           <ul className="snacks">{snacksArray}</ul>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,39 +3,49 @@ import Button from 'react-bootstrap/Button';
 
 const Form = (props) => {
 
+    const menuCategories = props.categories.map((el) => {
+        return <option name={el.category} value={el.id}>{el.category}</option>;
+    });
+
     const [formState, setFormState] = useState({
         id: 0,
         item: '',
         price: '',
-        category: '',
+        menu_category_id: '',
     });
 
     useEffect(() => {
         setFormState(props.menuItem);
-    }, [props.menuItem]);
+    }, [ props.menuItem]);
 
     const handleChange = (e) => {
+        console.log(e.target.name);
         const newState = { ...formState };
-        newState[e.target.name] = e.target.value;
+        let newValue = e.target.value;
+        if (e.target.name === 'categoryId') {
+            newValue = parseInt(e.target.value);
+        }
+        newState[e.target.name] = newValue;
         console.log(e.target.name, e.target.value);
         console.log('newState', newState);
         console.log('formState', formState);
         setFormState(newState);
+        console.log('currentState', formState);
     };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        props.submit(formState.item, formState.price, formState.category);
+        props.submit(formState.item, formState.price, parseInt(formState.menu_category_id));
         };
 
     const handleFormEdit = (e) => {
         e.preventDefault();
-        props.editsubmit(formState.id, formState.item, formState.price, formState.category);
+        props.editsubmit(formState.id, formState.item, formState.price, parseInt(formState.menu_category_id));
         };
 
     const handleFormDelete = (e) => {
         e.preventDefault();
-        props.deletesubmit(formState.id, formState.item, formState.price, formState.category);
+        props.deletesubmit(formState.id);
         };
 
     return(
@@ -58,15 +68,9 @@ const Form = (props) => {
                         <input name="price" className="form-field" value={formState.price} onChange={handleChange}></input>
                     </label>
                     <label>Category: 
-                        <select name="category" className="form-field" defaultValue="Please select" value={formState.category} onChange={handleChange}>
-
-                        <option name="category" value="" selected disabled>Please select</option>
-                        <option name="category" value="specials">Specials</option>
-                        <option name="category" value="coffee">Coffee</option>
-                        <option name="category" value="breakfast">Breakfast</option>
-                        <option name="category" value="lunch">Lunch</option>
-                        <option name="category" value="snacks">Snacks</option>
-
+                        <select name="menu_category_id" className="form-field" value={formState.menu_category_id} onChange={handleChange}>
+                        <option name="Please select" value="0" disabled>Please select</option>
+                        {menuCategories}
                         </select>
                     </label>
                 </div>
