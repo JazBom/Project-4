@@ -8,13 +8,13 @@ A cafe website with public facing UI and admin-only UI.
 
 Front-end built in ReactJS with Bootstrap, back-end built using Ruby-on-Rails with Postgres SQL database.
 
-Admin functionality includes protected admin-only routes using JWT tokens for editing menus (changes that are stored in the database successfully are automatically rendered to the public-facing menu UI) including adding, deleting and editing item name, description and category. Each item has a unique SQL database id. 
+Admin functionality includes admin-only routes using log-in generated JWT token. This includes a form for editing menus and menu items. Changes that are stored in the menu database successfully are automatically rendered to the public-facing menu list in the UI. Each item has a unique SQL database id. 
 
-A separate admin functionality, also with protected routes, allows admin to add and delete images - for example, of the cafe, locals and resident pooches. 
+A separate database and admin route allows admin to add and delete images of local dogs etc using a url with add/delete functionality. 
 
-Two bespoke APIs (currently named 'menu', and 'dogs', however these names may be updated if the scope of current data changes) create and access data stored in postgres for this purpose through CRUD functionality and via a Ruby-on-Rails backend server.
+The two bespoke APIs create and access data stored in postgres for this purpose through CRUD functionality and via a Ruby-on-Rails backend server.
 
-
+The configuration of the database tables make use of SQL entity association - the menu form adds instances to the 'menu items' table with values including a menu category id number, which references the relevant instance id from a separate 'menu categories' table.
 
 
 ![Screen Shot 2021-03-09 at 8 33 22 pm](https://user-images.githubusercontent.com/65477570/110449887-c2a83800-8116-11eb-8846-5405b3e60353.png)
@@ -40,13 +40,13 @@ ________________________________________________________________________________
 
 **Current app issues**
 
-The login functionality is currently limited to a simple hash being performed on the password entered by the user, which is then stored in the user database in Postgres. A user (name: 'Jess', password: 'abc123') has been seeded, but had to be input on the console using Ruby. The functionality to add a user via the CRUD routes (for example, in Postman) is still being developed. Password security will be further enhanced using salting techniques.
+Login - Password security will be enhanced using salting techniques (the login functionality is currently limited to a simple hash being performed on the password entered by the user, which is then stored in the user database in Postgres). 
 
-The database Postgres is SQL, but does not currently contain any entities that relate to each other - this will be added in the future. For example, the menu categories are hard-coded, but will be transferred to a table in Postgres and front/back-end code updated to integrate this (e.g. adding 'hasmany :menuitems' to the category model in the back-end, e.g. rendering front-end drop-down category input in the admin UI menu form based on get-all category database instances).
+Protected routes - Security will be enhanced by extending JWT token use to checking by API when data is called, and the current logged-in property using state updated to a function that can be invoked by children components to check the existance in local storage of the JWT token.
 
 **Future plans**
 
-I plan to add scheduling functionality for the menu item update - so, for example, the admin can add items one day but schedule them to appear at midnight on Sunday night, or add a 'special' that appears only on a particular day of the week.
+I plan to add scheduling functionality for the menu item update - for example, the admin can add items one day but schedule them to appear at midnight on Sunday night, or add a 'special' that appears only on a particular day of the week.
 
 An 'order online' function will be added and integrated with full stack functionality, so that customers can both order coffee and food ahead of time (or the cafe's preferred app for this integrated), and also order and pay for groceries from the cafe's newly established in-house corner-store.
 
