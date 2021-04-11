@@ -27,11 +27,13 @@ The website is fully responsive, with layouts for all screen sizes including tab
 
 (1) Tablet example -
 
-![Screen Shot 2021-03-09 at 8 49 05 pm](https://user-images.githubusercontent.com/65477570/110452065-ecfaf500-8118-11eb-9c17-ee5442471f6c.png)
+<img width="948" alt="Screen Shot 2021-04-11 at 6 36 27 pm" src="https://user-images.githubusercontent.com/65477570/114297620-e505ea80-9af4-11eb-9891-5404b90ce761.png">
+
 
 (2) Smart phone example -
 
-![Screen Shot 2021-03-09 at 9 30 59 pm](https://user-images.githubusercontent.com/65477570/110457475-c8a21700-811e-11eb-946a-6ce72e6b9ea2.png)
+![Screen Shot 2021-04-08 at 8 41 24 pm](https://user-images.githubusercontent.com/65477570/114297560-8d677f00-9af4-11eb-8df1-1ecd047c16c5.png)
+
 
 
 
